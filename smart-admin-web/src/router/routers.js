@@ -3,7 +3,7 @@ import { error } from './module/error';
 import { business } from './module/business';
 import { support } from './module/support';
 import { system } from './module/system';
-import {studio} from "@/router/module/studio";
+import { studio } from './module/studio';
 
 /**
  *

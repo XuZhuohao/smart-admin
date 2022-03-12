@@ -25,7 +25,7 @@ export const attendanceRecordDetail = [
                         { title: '导出全部', name: 'attendance-record-detail-list-export-all' }
                     ]
                 },
-                component: () => import('@/views/business/attendance-record-detail/attendance-record-detail-list.vue')
+                component: () => import('@/views/studio/attendance-record-detail/attendance-record-detail-list.vue')
              }
         ]
     }

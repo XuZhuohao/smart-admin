@@ -25,7 +25,7 @@ export const gradeTeacherInfo = [
                         { title: '导出全部', name: 'grade-teacher-info-list-export-all' }
                     ]
                 },
-                component: () => import('@/views/business/grade-teacher-info/grade-teacher-info-list.vue')
+                component: () => import('@/views/studio/grade-teacher-info/grade-teacher-info-list.vue')
              }
         ]
     }

@@ -25,7 +25,7 @@ export const teacherInfo = [
                         { title: '导出全部', name: 'teacher-info-list-export-all' }
                     ]
                 },
-                component: () => import('@/views/business/teacher-info/teacher-info-list.vue')
+                component: () => import('@/views/studio/teacher-info/teacher-info-list.vue')
              }
         ]
     }

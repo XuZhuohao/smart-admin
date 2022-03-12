@@ -25,7 +25,7 @@ export const gradeInfo = [
                         { title: '导出全部', name: 'grade-info-list-export-all' }
                     ]
                 },
-                component: () => import('@/views/business/grade-info/grade-info-list.vue')
+                component: () => import('@/views/studio/grade-info/grade-info-list.vue')
              }
         ]
     }
