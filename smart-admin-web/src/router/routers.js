@@ -3,6 +3,7 @@ import { error } from './module/error';
 import { business } from './module/business';
 import { support } from './module/support';
 import { system } from './module/system';
+import {studio} from "@/router/module/studio";
 
 /**
  *
@@ -37,7 +38,8 @@ export const routers = [
   login,
   ...home,
   ...error,
-  ...business, 
+  ...business,
   ...system,
-  ...support
+  ...support,
+  ...studio
 ];
