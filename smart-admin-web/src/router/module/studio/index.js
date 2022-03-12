@@ -1,13 +1,8 @@
 
 import Main from '@/components/main';
-import {attendanceRecord} from './attendance-record';
-import {attendanceRecordDetail} from './attendance-record-detail';
-import {gradeInfo} from './grade-info';
-import {gradeStudentInfo} from './grade-student-info';
-import {gradeTeacherInfo} from './grade-teacher-info';
-import {projectInfo} from './project-info';
-import {studentInfo} from './student-info';
-import {teacherInfo} from './teacher-info';
+import {HBaseInfo} from "./h-base-info";
+import {HProjectManage} from "./h-project-manage";
+import {HAttendanceManage} from "./h-attendance-manage";
 
 
 // 业务
@@ -22,14 +17,9 @@ export const studio = [
       icon: 'icon iconfont iconxitongshezhi'
     },
     children: [
-      ...attendanceRecord,
-      ...attendanceRecordDetail,
-      ...gradeInfo,
-      ...gradeStudentInfo,
-      ...gradeTeacherInfo,
-      ...projectInfo,
-      ...studentInfo,
-      ...teacherInfo
+      ...HBaseInfo,
+      ...HProjectManage,
+      ...HAttendanceManage
     ]
   }
 ];
