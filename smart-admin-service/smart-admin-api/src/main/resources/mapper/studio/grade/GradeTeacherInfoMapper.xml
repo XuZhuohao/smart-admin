@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.grade.dao.GradeTeacherInfoDao">
+
+    <resultMap id="GradeTeacherInfoVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.GradeTeacherInfoVO"></resultMap>
+    <resultMap id="GradeTeacherInfoExcelVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.GradeTeacherInfoExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="GradeTeacherInfoVO">
+        select
+          id,
+          grade_code,
+          techer_info_id,
+          should_pay_wages,
+          status,
+          total_class_hours,
+          complete_class_hours,
+          payment_terms_code,
+          create_time,
+          update_time
+        from h_grade_teacher_info
+        <where>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+            <if test="queryDTO.statusList !=null and queryDTO.statusList.size() > 0">
+                and status in
+                <foreach collection="queryDTO.statusList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="GradeTeacherInfoExcelVO">
+        select
+           id,
+           grade_code,
+           techer_info_id,
+           should_pay_wages,
+           status,
+           total_class_hours,
+           complete_class_hours,
+           payment_terms_code,
+           create_time,
+           update_time
+        from h_grade_teacher_info
+        <where>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+            <if test="queryDTO.statusList !=null and queryDTO.statusList.size() > 0">
+                and status in
+                <foreach collection="queryDTO.statusList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="GradeTeacherInfoExcelVO">
+        select
+         id,
+         grade_code,
+         techer_info_id,
+         should_pay_wages,
+         status,
+         total_class_hours,
+         complete_class_hours,
+         payment_terms_code,
+         create_time,
+         update_time
+        from h_grade_teacher_info
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_grade_teacher_info where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_grade_teacher_info where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

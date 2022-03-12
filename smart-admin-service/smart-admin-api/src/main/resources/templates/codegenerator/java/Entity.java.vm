@@ -12,8 +12,6 @@ import lombok.Data;
  *
  * @author ${author}
  * @version 1.0
- * @company ${company}
- * @copyright (c)  ${company}Inc. All rights reserved.
  * @date ${date}
  * @since JDK1.8
  */

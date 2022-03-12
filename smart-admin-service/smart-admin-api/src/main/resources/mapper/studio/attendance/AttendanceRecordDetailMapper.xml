@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.attendance.dao.AttendanceRecordDetailDao">
+
+    <resultMap id="AttendanceRecordDetailVO" type="com.yui.smart.admin.module.studio.attendance.domain.vo.AttendanceRecordDetailVO"></resultMap>
+    <resultMap id="AttendanceRecordDetailExcelVO" type="com.yui.smart.admin.module.studio.attendance.domain.vo.AttendanceRecordDetailExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="AttendanceRecordDetailVO">
+        select
+          id,
+          attendance_id,
+          info_id,
+          info_type,
+          attend,
+          type,
+          leave_reason,
+          remark,
+          create_time,
+          update_time
+        from h_attendance_record_detail
+        <where>
+            <if test="queryDTO.infoTypeList !=null and queryDTO.infoTypeList.size() > 0">
+                and info_type in
+                <foreach collection="queryDTO.infoTypeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.attendList !=null and queryDTO.attendList.size() > 0">
+                and attend in
+                <foreach collection="queryDTO.attendList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.typeList !=null and queryDTO.typeList.size() > 0">
+                and type in
+                <foreach collection="queryDTO.typeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="AttendanceRecordDetailExcelVO">
+        select
+           id,
+           attendance_id,
+           info_id,
+           info_type,
+           attend,
+           type,
+           leave_reason,
+           remark,
+           create_time,
+           update_time
+        from h_attendance_record_detail
+        <where>
+            <if test="queryDTO.infoTypeList !=null and queryDTO.infoTypeList.size() > 0">
+                and info_type in
+                <foreach collection="queryDTO.infoTypeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.attendList !=null and queryDTO.attendList.size() > 0">
+                and attend in
+                <foreach collection="queryDTO.attendList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.typeList !=null and queryDTO.typeList.size() > 0">
+                and type in
+                <foreach collection="queryDTO.typeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="AttendanceRecordDetailExcelVO">
+        select
+         id,
+         attendance_id,
+         info_id,
+         info_type,
+         attend,
+         type,
+         leave_reason,
+         remark,
+         create_time,
+         update_time
+        from h_attendance_record_detail
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_attendance_record_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_attendance_record_detail where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.attendance.dao.AttendanceRecordDao">
+
+    <resultMap id="AttendanceRecordVO" type="com.yui.smart.admin.module.studio.attendance.domain.vo.AttendanceRecordVO"></resultMap>
+    <resultMap id="AttendanceRecordExcelVO" type="com.yui.smart.admin.module.studio.attendance.domain.vo.AttendanceRecordExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="AttendanceRecordVO">
+        select
+          id,
+          grade_code,
+          occupy_class_hour,
+          attend_time_begin,
+          attend_time_end,
+          should_attend_number,
+          attend_number,
+          attend_type,
+          create_time,
+          update_time
+        from h_attendance_record
+        <where>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="AttendanceRecordExcelVO">
+        select
+           id,
+           grade_code,
+           occupy_class_hour,
+           attend_time_begin,
+           attend_time_end,
+           should_attend_number,
+           attend_number,
+           attend_type,
+           create_time,
+           update_time
+        from h_attendance_record
+        <where>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="AttendanceRecordExcelVO">
+        select
+         id,
+         grade_code,
+         occupy_class_hour,
+         attend_time_begin,
+         attend_time_end,
+         should_attend_number,
+         attend_number,
+         attend_type,
+         create_time,
+         update_time
+        from h_attendance_record
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_attendance_record where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_attendance_record where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

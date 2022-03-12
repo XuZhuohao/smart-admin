@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.base.dao.StudentInfoDao">
+
+    <resultMap id="StudentInfoVO" type="com.yui.smart.admin.module.studio.base.domain.vo.StudentInfoVO"></resultMap>
+    <resultMap id="StudentInfoExcelVO" type="com.yui.smart.admin.module.studio.base.domain.vo.StudentInfoExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="StudentInfoVO">
+        select
+          id,
+          name,
+          birth_date,
+          sex,
+          interest,
+          remark,
+          contacts,
+          contacts_phone_number,
+          create_time,
+          update_time
+        from h_student_info
+        <where>
+            <if test="queryDTO.name != null and queryDTO.name != ''">
+                AND INSTR(name,#{queryDTO.name})
+            </if>
+            <if test="queryDTO.sexList !=null and queryDTO.sexList.size() > 0">
+                and sex in
+                <foreach collection="queryDTO.sexList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.contacts != null and queryDTO.contacts != ''">
+                AND INSTR(contacts,#{queryDTO.contacts})
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="StudentInfoExcelVO">
+        select
+           id,
+           name,
+           birth_date,
+           sex,
+           interest,
+           remark,
+           contacts,
+           contacts_phone_number,
+           create_time,
+           update_time
+        from h_student_info
+        <where>
+            <if test="queryDTO.name != null and queryDTO.name != ''">
+                AND INSTR(name,#{queryDTO.name})
+            </if>
+            <if test="queryDTO.sexList !=null and queryDTO.sexList.size() > 0">
+                and sex in
+                <foreach collection="queryDTO.sexList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="queryDTO.contacts != null and queryDTO.contacts != ''">
+                AND INSTR(contacts,#{queryDTO.contacts})
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="StudentInfoExcelVO">
+        select
+         id,
+         name,
+         birth_date,
+         sex,
+         interest,
+         remark,
+         contacts,
+         contacts_phone_number,
+         create_time,
+         update_time
+        from h_student_info
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_student_info where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_student_info where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

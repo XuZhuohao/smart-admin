@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.grade.dao.GradeInfoDao">
+
+    <resultMap id="GradeInfoVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.GradeInfoVO"></resultMap>
+    <resultMap id="GradeInfoExcelVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.GradeInfoExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="GradeInfoVO">
+        select
+          id,
+          project_code,
+          grade_code,
+          grade_name,
+          grade_place,
+          status,
+          start_time,
+          end_time,
+          total_class_hours,
+          used_class_hours,
+          create_time,
+          update_time
+        from h_grade_info
+        <where>
+            <if test="queryDTO.projectCode != null and queryDTO.projectCode != ''">
+                AND INSTR(project_code,#{queryDTO.projectCode})
+            </if>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+            <if test="queryDTO.gradeName != null and queryDTO.gradeName != ''">
+                AND INSTR(grade_name,#{queryDTO.gradeName})
+            </if>
+            <if test="queryDTO.statusList !=null and queryDTO.statusList.size() > 0">
+                and status in
+                <foreach collection="queryDTO.statusList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="GradeInfoExcelVO">
+        select
+           id,
+           project_code,
+           grade_code,
+           grade_name,
+           grade_place,
+           status,
+           start_time,
+           end_time,
+           total_class_hours,
+           used_class_hours,
+           create_time,
+           update_time
+        from h_grade_info
+        <where>
+            <if test="queryDTO.projectCode != null and queryDTO.projectCode != ''">
+                AND INSTR(project_code,#{queryDTO.projectCode})
+            </if>
+            <if test="queryDTO.gradeCode != null and queryDTO.gradeCode != ''">
+                AND INSTR(grade_code,#{queryDTO.gradeCode})
+            </if>
+            <if test="queryDTO.gradeName != null and queryDTO.gradeName != ''">
+                AND INSTR(grade_name,#{queryDTO.gradeName})
+            </if>
+            <if test="queryDTO.statusList !=null and queryDTO.statusList.size() > 0">
+                and status in
+                <foreach collection="queryDTO.statusList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="GradeInfoExcelVO">
+        select
+         id,
+         project_code,
+         grade_code,
+         grade_name,
+         grade_place,
+         status,
+         start_time,
+         end_time,
+         total_class_hours,
+         used_class_hours,
+         create_time,
+         update_time
+        from h_grade_info
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_grade_info where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_grade_info where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

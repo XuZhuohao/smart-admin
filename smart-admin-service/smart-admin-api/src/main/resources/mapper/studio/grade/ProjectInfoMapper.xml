@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yui.smart.admin.module.studio.grade.dao.ProjectInfoDao">
+
+    <resultMap id="ProjectInfoVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.ProjectInfoVO"></resultMap>
+    <resultMap id="ProjectInfoExcelVO" type="com.yui.smart.admin.module.studio.grade.domain.vo.ProjectInfoExcelVO"></resultMap>
+
+
+    <select id="queryByPage" resultMap="ProjectInfoVO">
+        select
+          id,
+          project_code,
+          project_name,
+          project_type,
+          project_price,
+          project_place,
+          start_time,
+          end_time,
+          total_class_hours,
+          create_time,
+          update_time
+        from h_project_info
+        <where>
+            <if test="queryDTO.projectCode != null and queryDTO.projectCode != ''">
+                AND INSTR(project_code,#{queryDTO.projectCode})
+            </if>
+            <if test="queryDTO.projectName != null and queryDTO.projectName != ''">
+                AND INSTR(project_name,#{queryDTO.projectName})
+            </if>
+            <if test="queryDTO.projectTypeList !=null and queryDTO.projectTypeList.size() > 0">
+                and project_type in
+                <foreach collection="queryDTO.projectTypeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryAllExportData" resultMap="ProjectInfoExcelVO">
+        select
+           id,
+           project_code,
+           project_name,
+           project_type,
+           project_price,
+           project_place,
+           start_time,
+           end_time,
+           total_class_hours,
+           create_time,
+           update_time
+        from h_project_info
+        <where>
+            <if test="queryDTO.projectCode != null and queryDTO.projectCode != ''">
+                AND INSTR(project_code,#{queryDTO.projectCode})
+            </if>
+            <if test="queryDTO.projectName != null and queryDTO.projectName != ''">
+                AND INSTR(project_name,#{queryDTO.projectName})
+            </if>
+            <if test="queryDTO.projectTypeList !=null and queryDTO.projectTypeList.size() > 0">
+                and project_type in
+                <foreach collection="queryDTO.projectTypeList" open="(" index="index" separator="," close=")" item="item">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="queryDTO.createTimeBegin != null ">
+                AND create_time &gt;= #{queryDTO.createTimeBegin}
+            </if>
+            <if test="queryDTO.createTimeEnd != null ">
+                AND create_time &lt;= #{queryDTO.createTimeEnd}
+            </if>
+
+            <if test="queryDTO.updateTimeBegin != null ">
+                AND update_time &gt;= #{queryDTO.updateTimeBegin}
+            </if>
+            <if test="queryDTO.updateTimeEnd != null ">
+                AND update_time &lt;= #{queryDTO.updateTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryBatchExportData" resultMap="ProjectInfoExcelVO">
+        select
+         id,
+         project_code,
+         project_name,
+         project_type,
+         project_price,
+         project_place,
+         start_time,
+         end_time,
+         total_class_hours,
+         create_time,
+         update_time
+        from h_project_info
+        where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteById">
+        delete from h_project_info where id = #{id}
+    </delete>
+
+    <delete id="deleteByIdList">
+        delete from h_project_info where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="item">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>
