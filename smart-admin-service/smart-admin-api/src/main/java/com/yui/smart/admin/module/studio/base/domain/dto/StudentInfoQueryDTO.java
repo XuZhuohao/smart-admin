@@ -21,7 +21,7 @@ public class StudentInfoQueryDTO extends PageParamDTO {
     private String name;
 
     @ApiModelProperty("性别（1：男，2：女）")
-    private List<Integer> sexList;
+    private Integer sex;
 
     @ApiModelProperty("联系人")
     private String contacts;

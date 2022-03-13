@@ -19,7 +19,7 @@ public class StudentInfoAddDTO {
     private String name;
 
     @ApiModelProperty("生日")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date birthDate;
 
     @ApiModelProperty("性别（1：男，2：女）")

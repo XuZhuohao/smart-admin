@@ -8,8 +8,11 @@
                     <Input placeholder="请输入姓名" style="width: 180px" v-model="queryForm.name" />
                 </span>
                 <span>
-                    性别（1：男，2：女） :
-                    <Input placeholder="请输入性别（1：男，2：女）" style="width: 180px" v-model="queryForm.sex" />
+                    性别:
+                    <Select placeholder="请输入性别" style="width:200px" v-model="queryForm.sex">
+                      <Option value>全部</Option>
+                      <Option :key="item.value" :value="item.value" v-for="item in sexType">{{item.desc}}</Option>
+                    </Select>
                 </span>
                 <span>
                     联系人 :
@@ -182,6 +185,7 @@
 <script>
     import {dateTimeRangeConvert} from '@/lib/util'
     import { PAGE_SIZE_OPTIONS } from '@/constants/table-page';
+    import {SEX_TYPE} from '@/constants/studio.js'
     import { studentInfoApi } from '@/api/student-info';
     import StudentInfoListForm from './components/student-info-list-form';
     const PAGE_SIZE_INIT = 20;
@@ -193,6 +197,10 @@
         props: {},
         data() {
             return {
+                /* -----------------------------dict------------------------------*/
+              dict: {
+                sexType:[]
+              },
                 /* -------------------------添加、更新表单 ------------------------- */
                 saveModal: {
                     show: false,
@@ -266,10 +274,13 @@
                             sortable: 'custom'
                         },
                                                 {
-                            title: '性别（1：男，2：女）',
+                            title: '性别',
                             key: 'sex',
                             tableColumn: 'h_student_info.sex',
-                            sortable: 'custom'
+                            sortable: 'custom',
+                            render: (h, params) =>{
+                              return h('span', this.dict.sexType[params.row.sex])
+                            }
                         },
                                                 {
                             title: '兴趣',
@@ -335,7 +346,20 @@
                 }
             };
         },
-        computed: {},
+        computed: {
+          // 文件业务类型
+          sexType: function() {
+            let array = [];
+            for (let item in SEX_TYPE) {
+              let obj = {};
+              obj.desc = SEX_TYPE[item].desc;
+              obj.value = SEX_TYPE[item].value;
+              this.dict.sexType[obj.value] = obj.desc;
+              array.push(obj);
+            }
+            return array;
+          },
+        },
         watch: {},
         filters: {},
         created() {},
