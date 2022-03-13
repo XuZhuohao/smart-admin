@@ -22,6 +22,9 @@ import Enum from 'vue-enum';
 import enumInfo from '@/constants';
 // 处理table操作按钮
 import tableAction from './lib/table-action';
+// element ui
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 // 时间
 import moment from 'moment';
@@ -38,6 +41,8 @@ Vue.use(ViewUI, {
 });
 Vue.use(JsonViewer);
 Vue.use(vClickOutside);
+
+Vue.use(ElementPlus)
 
 
 Number.prototype.toFixed = function (length) {

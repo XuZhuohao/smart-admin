@@ -30,6 +30,13 @@
                 AND INSTR(contacts,#{queryDTO.contacts})
             </if>
 
+            <if test="queryDTO.birthdateBegin != null ">
+                AND birth_date &gt;= #{queryDTO.birthdateBegin}
+            </if>
+            <if test="queryDTO.birthDateEnd != null ">
+                AND birth_date &lt;= #{birthDateEnd}
+            </if>
+
             <if test="queryDTO.createTimeBegin != null ">
                 AND create_time &gt;= #{queryDTO.createTimeBegin}
             </if>

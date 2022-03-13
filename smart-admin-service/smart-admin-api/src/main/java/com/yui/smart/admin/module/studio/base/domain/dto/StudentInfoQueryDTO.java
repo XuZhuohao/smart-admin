@@ -1,10 +1,10 @@
 package com.yui.smart.admin.module.studio.base.domain.dto;
 
 import com.yui.smart.admin.common.domain.PageParamDTO;
+import com.yui.smart.admin.util.AgeToTimeUtil;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import java.util.Date;
-import java.util.List;
 
 /**
  * [ 学生信息 ]
@@ -37,4 +37,28 @@ public class StudentInfoQueryDTO extends PageParamDTO {
 
     @ApiModelProperty("上次更新创建时间-开始")
     private Date updateTimeEnd;
+
+    private Date birthdateBegin;
+    private Date birthDateEnd;
+
+    /*------非数据库字段-----*/
+    @ApiModelProperty("年龄-开始")
+    private Integer ageBegin;
+
+    @ApiModelProperty("年龄-截止")
+    private Integer ageEnd;
+
+    public Date getBirthdateBegin() {
+        if (this.birthdateBegin == null) {
+            return AgeToTimeUtil.getDateByAgeBegin(ageEnd);
+        }
+        return birthdateBegin;
+    }
+
+    public Date getBirthDateEnd() {
+        if (this.birthDateEnd == null) {
+            return AgeToTimeUtil.getDateByAgeEnd(ageBegin);
+        }
+        return birthDateEnd;
+    }
 }
