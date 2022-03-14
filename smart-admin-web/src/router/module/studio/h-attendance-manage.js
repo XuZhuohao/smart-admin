@@ -10,7 +10,7 @@ export const HAttendanceManage = [
     name: 'AttendanceManage',
     component: Main,
     meta: {
-      title: '课程管理',
+      title: '考勤管理',
       icon: 'icon iconfont iconjiekouwendang'
     },
     children: [

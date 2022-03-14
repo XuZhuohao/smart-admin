@@ -9,3 +9,14 @@ export const SEX_TYPE = {
     desc: '女'
   },
 }
+
+export const course_category = {
+  art: {
+    value: 1,
+    desc: '美术'
+  },
+  calligraphy:{
+    value: 2,
+    desc: '书法'
+  }
+}
