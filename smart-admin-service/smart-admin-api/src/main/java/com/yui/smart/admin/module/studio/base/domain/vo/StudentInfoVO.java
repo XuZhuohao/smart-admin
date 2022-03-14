@@ -1,5 +1,6 @@
 package com.yui.smart.admin.module.studio.base.domain.vo;
 
+import com.yui.smart.admin.util.AgeToTimeUtil;
 import lombok.Data;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -48,6 +49,10 @@ public class StudentInfoVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
 
+    @ApiModelProperty("年龄")
+    private Integer age;
 
-
+    public Integer getAge() {
+        return AgeToTimeUtil.getAgeByDate(this.birthDate);
+    }
 }

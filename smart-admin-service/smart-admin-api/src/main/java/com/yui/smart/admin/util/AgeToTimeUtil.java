@@ -2,6 +2,7 @@ package com.yui.smart.admin.util;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import io.swagger.models.auth.In;
 
@@ -29,11 +30,19 @@ public class AgeToTimeUtil {
         return getDateByAge(age - 1);
     }
 
-    public static Date getDateByAge(Integer age){
+    private static Date getDateByAge(Integer age){
         DateTime nowDate = DateUtil.date(System.currentTimeMillis());
         DateTime birthdate = DateUtil.offset(nowDate, DateField.YEAR, -age);
         // 出生年
         int year = DateUtil.year(birthdate);
         return DateUtil.parse(year + "-01-01 00:00:00");
+    }
+
+    public static Integer getAgeByDate(Date date){
+        if (date == null) {
+            return null;
+        }
+        DateTime nowDate = DateUtil.date(System.currentTimeMillis());
+        return DateUtil.year(nowDate) - DateUtil.year(date) + 1;
     }
 }

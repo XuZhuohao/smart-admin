@@ -18,6 +18,12 @@
                     联系人 :
                     <Input placeholder="请输入联系人" style="width: 180px" v-model="queryForm.contacts" />
                 </span>
+               <span>
+                  年龄:
+                 <Input placeholder="请输入年龄起始"  style="width:80px"  type="number"  v-model="queryForm.ageBegin" />
+                 ~
+                 <Input placeholder="请输入年龄结束"  style="width:80px"  type="number" v-model="queryForm.ageEnd" />
+               </span>
                 <ButtonGroup>
                     <Button
                             @click="queryList"
@@ -232,7 +238,9 @@
                     updateTimeRange: ["",""],
                     pageNum: 1,
                     pageSize: PAGE_SIZE_INIT,
-                    orders: []
+                    orders: [],
+                  ageBegin:null,
+                  ageEnd:null
                 },
                 //是否展示更多搜索条件
                 showMoreQueryConditionFlag: false,
@@ -266,6 +274,12 @@
                             key: 'name',
                             tableColumn: 'h_student_info.name',
                             sortable: 'custom'
+                        },
+                       {
+                          title: '年龄',
+                          key: 'age',
+                          tableColumn: 'h_student_info.age',
+                          sortable: 'custom'
                         },
                                                 {
                             title: '生日',

@@ -34,7 +34,7 @@
                 AND birth_date &gt;= #{queryDTO.birthdateBegin}
             </if>
             <if test="queryDTO.birthDateEnd != null ">
-                AND birth_date &lt;= #{birthDateEnd}
+                AND birth_date &lt;= #{queryDTO.birthDateEnd}
             </if>
 
             <if test="queryDTO.createTimeBegin != null ">
