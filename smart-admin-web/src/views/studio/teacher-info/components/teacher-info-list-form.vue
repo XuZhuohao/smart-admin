@@ -5,22 +5,29 @@
             <Input v-model="form.name" />
           </FormItem>
           <FormItem label="生日" prop="birthDate">
-            <Input v-model="form.birthDate" />
+            <DatePicker
+              placeholder="选择生日"
+              type="date"
+              format="yyyy-MM-dd"
+              @on-change="form.birthDate=$event"
+            ></DatePicker>
           </FormItem>
-          <FormItem label="性别（1：男，2：女）" prop="sex">
-            <Input type="number" v-model.number="form.sex" />
+          <FormItem label="性别" prop="sex">
+            <Select placeholder="请输入性别"v-model="form.sex">
+              <Option :key="item.value" :value="item.value" v-for="item in sexType">{{item.desc}}</Option>
+            </Select>
+          </FormItem>
+          <FormItem label="联系电话" prop="contactsPhoneNumber">
+            <Input v-model="form.contactsPhoneNumber" />
+          </FormItem>
+          <FormItem label="课程方向:" prop="courseDirection">
+            <Input v-model="form.courseDirection" />
           </FormItem>
           <FormItem label="兴趣" prop="interest">
             <Input v-model="form.interest" />
           </FormItem>
           <FormItem label="备注" prop="remark">
             <Input v-model="form.remark" />
-          </FormItem>
-          <FormItem label="联系人电话" prop="contactsPhoneNumber">
-            <Input v-model="form.contactsPhoneNumber" />
-          </FormItem>
-          <FormItem label="课程方向:" prop="courseDirection">
-            <Input v-model="form.courseDirection" />
           </FormItem>
     </Form>
     <Row class="code-row-bg" justify="end" type="flex">
@@ -31,6 +38,8 @@
 </template>
 <script>
   import { teacherInfoApi } from '@/api/teacher-info';
+  import {SEX_TYPE} from '@/constants/studio.js'
+
   export default {
     name: 'TeacherInfoListForm',
     components: {
@@ -70,19 +79,32 @@
         //姓名
         name:[{ required: true, message: '请输入姓名', trigger: 'blur' }],
         //生日
-        birthDate:[{ required: true, message: '请输入生日', trigger: 'blur' }],
+        // birthDate:[{ required: true, message: '请输入生日', trigger: 'blur' }],
         //性别（1：男，2：女）
         sex:[{ type:'number',required: true, message: '请输入性别（1：男，2：女）', trigger: 'blur' }],
         //兴趣
-        interest:[{ required: true, message: '请输入兴趣', trigger: 'blur' }],
+        // interest:[{ required: true, message: '请输入兴趣', trigger: 'blur' }],
         //备注
-        remark:[{ required: true, message: '请输入备注', trigger: 'blur' }],
+        // remark:[{ required: true, message: '请输入备注', trigger: 'blur' }],
         //联系人电话
         contactsPhoneNumber:[{ required: true, message: '请输入联系人电话', trigger: 'blur' }],
         //课程方向:
         courseDirection:[{ required: true, message: '请输入课程方向:', trigger: 'blur' }],
         }
       };
+    },
+    computed:{
+      // 文件业务类型
+      sexType: function() {
+        let array = [];
+        for (let item in SEX_TYPE) {
+          let obj = {};
+          obj.desc = SEX_TYPE[item].desc;
+          obj.value = SEX_TYPE[item].value;
+          array.push(obj);
+        }
+        return array;
+      },
     },
   watch: {
       updateData: function(newValue, oldValue) {

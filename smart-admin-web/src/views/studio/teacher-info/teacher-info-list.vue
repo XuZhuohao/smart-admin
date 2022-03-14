@@ -8,12 +8,15 @@
                     <Input placeholder="请输入姓名" style="width: 180px" v-model="queryForm.name" />
                 </span>
                 <span>
-                    性别（1：男，2：女） :
-                    <Input placeholder="请输入性别（1：男，2：女）" style="width: 180px" v-model="queryForm.sex" />
+                    性别:
+                    <Select placeholder="请输入性别" style="width:200px" v-model="queryForm.sex">
+                      <Option value>全部</Option>
+                      <Option :key="item.value" :value="item.value" v-for="item in sexType">{{item.desc}}</Option>
+                    </Select>
                 </span>
                 <span>
-                    联系人电话 :
-                    <Input placeholder="请输入联系人电话" style="width: 180px" v-model="queryForm.contactsPhoneNumber" />
+                    联系电话 :
+                    <Input placeholder="请输入联系电话" style="width: 180px" v-model="queryForm.contactsPhoneNumber" />
                 </span>
                 <ButtonGroup>
                     <Button
@@ -184,6 +187,7 @@
     import { PAGE_SIZE_OPTIONS } from '@/constants/table-page';
     import { teacherInfoApi } from '@/api/teacher-info';
     import TeacherInfoListForm from './components/teacher-info-list-form';
+    import {SEX_TYPE} from '@/constants/studio.js'
     const PAGE_SIZE_INIT = 20;
     export default {
         name: 'TeacherInfoList',
@@ -193,6 +197,9 @@
         props: {},
         data() {
             return {
+                dict: {
+                  sexType:[]
+                },
                 /* -------------------------添加、更新表单 ------------------------- */
                 saveModal: {
                     show: false,
@@ -266,10 +273,13 @@
                             sortable: 'custom'
                         },
                                                 {
-                            title: '性别（1：男，2：女）',
+                            title: '性别',
                             key: 'sex',
                             tableColumn: 'h_teacher_info.sex',
-                            sortable: 'custom'
+                            sortable: 'custom',
+                            render: (h, params) =>{
+                              return h('span', this.dict.sexType[params.row.sex])
+                            }
                         },
                                                 {
                             title: '兴趣',
@@ -284,7 +294,7 @@
                             sortable: 'custom'
                         },
                                                 {
-                            title: '联系人电话',
+                            title: '联系电话',
                             key: 'contactsPhoneNumber',
                             tableColumn: 'h_teacher_info.contacts_phone_number',
                             sortable: 'custom'
@@ -335,7 +345,20 @@
                 }
             };
         },
-        computed: {},
+        computed: {
+          // 文件业务类型
+          sexType: function() {
+            let array = [];
+            for (let item in SEX_TYPE) {
+              let obj = {};
+              obj.desc = SEX_TYPE[item].desc;
+              obj.value = SEX_TYPE[item].value;
+              this.dict.sexType[obj.value] = obj.desc;
+              array.push(obj);
+            }
+            return array;
+          },
+        },
         watch: {},
         filters: {},
         created() {},

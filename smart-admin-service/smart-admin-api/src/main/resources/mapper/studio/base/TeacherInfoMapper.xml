@@ -23,11 +23,9 @@
             <if test="queryDTO.name != null and queryDTO.name != ''">
                 AND INSTR(name,#{queryDTO.name})
             </if>
-            <if test="queryDTO.sexList !=null and queryDTO.sexList.size() > 0">
-                and sex in
-                <foreach collection="queryDTO.sexList" open="(" index="index" separator="," close=")" item="item">
-                    #{item}
-                </foreach>
+            <if test="queryDTO.sex !=null and queryDTO.sex != ''">
+                and sex = #{queryDTO.sex}
+
             </if>
             <if test="queryDTO.contactsPhoneNumber != null and queryDTO.contactsPhoneNumber != ''">
                 AND INSTR(contacts_phone_number,#{queryDTO.contactsPhoneNumber})
@@ -66,11 +64,9 @@
             <if test="queryDTO.name != null and queryDTO.name != ''">
                 AND INSTR(name,#{queryDTO.name})
             </if>
-            <if test="queryDTO.sexList !=null and queryDTO.sexList.size() > 0">
-                and sex in
-                <foreach collection="queryDTO.sexList" open="(" index="index" separator="," close=")" item="item">
-                    #{item}
-                </foreach>
+            <if test="queryDTO.sex !=null and queryDTO.sex != ''">
+                and sex = #{queryDTO.sex}
+
             </if>
             <if test="queryDTO.contactsPhoneNumber != null and queryDTO.contactsPhoneNumber != ''">
                 AND INSTR(contacts_phone_number,#{queryDTO.contactsPhoneNumber})

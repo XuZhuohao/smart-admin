@@ -66,18 +66,23 @@
            create_time,
            update_time
         from h_student_info
+
         <where>
             <if test="queryDTO.name != null and queryDTO.name != ''">
                 AND INSTR(name,#{queryDTO.name})
             </if>
-            <if test="queryDTO.sexList !=null and queryDTO.sexList.size() > 0">
-                and sex in
-                <foreach collection="queryDTO.sexList" open="(" index="index" separator="," close=")" item="item">
-                    #{item}
-                </foreach>
+            <if test="queryDTO.sex !=null and queryDTO.sex != ''">
+                and sex = #{queryDTO.sex}
             </if>
             <if test="queryDTO.contacts != null and queryDTO.contacts != ''">
                 AND INSTR(contacts,#{queryDTO.contacts})
+            </if>
+
+            <if test="queryDTO.birthdateBegin != null ">
+                AND birth_date &gt;= #{queryDTO.birthdateBegin}
+            </if>
+            <if test="queryDTO.birthDateEnd != null ">
+                AND birth_date &lt;= #{queryDTO.birthDateEnd}
             </if>
 
             <if test="queryDTO.createTimeBegin != null ">
