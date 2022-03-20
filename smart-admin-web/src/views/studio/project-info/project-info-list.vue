@@ -201,6 +201,7 @@
                 saveModal: {
                     show: false,
                     isUpdate: false,
+                    isCopy: false,
                     updateData: null
                 },
                 /* -------------------------批量操作------------------------- */
@@ -333,7 +334,19 @@
                                         action: () => {
                                             this.showEditProjectInfoForm(params.row);
                                         }
-                                    }
+                                    },
+                                    {
+                                      title: '复制',
+                                      directives: [
+                                        {
+                                          name: 'privilege',
+                                          value: 'project-info-list-update'
+                                        }
+                                      ],
+                                      action: () => {
+                                        this.showCopyProjectInfoForm(params.row);
+                                      }
+                                    },
                                 ];
                                 return this.$tableAction(h, actions);
                             }
@@ -502,12 +515,20 @@
             //显示添加表单
             showAddProjectInfoForm() {
                 this.saveModal.isUpdate = false;
+                this.saveModal.isCopy = false;
                 this.saveModal.show = true;
             },
             showEditProjectInfoForm(updateObject){
-                this.saveModal.isUpdate =true;
+                this.saveModal.isUpdate = true;
+                this.saveModal.isCopy = false;
                 this.saveModal.updateData = updateObject;
                 this.saveModal.show = true;
+            },
+            showCopyProjectInfoForm(updateObject){
+              this.saveModal.isUpdate = false;
+              this.saveModal.isCopy = true;
+              this.saveModal.updateData = updateObject;
+              this.saveModal.show = true;
             },
             saveFormClose(){
                 this.saveModal.show = false;

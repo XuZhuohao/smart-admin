@@ -12,7 +12,6 @@
           </FormItem>
           <FormItem label="课程类别" prop="projectType">
             <Select placeholder="请选择课程类别" style="width:200px" v-model="form.projectType">
-              <Option value>全部</Option>
               <Option :key="item.value" :value="item.value" v-for="item in projectType">{{item.desc}}</Option>
             </Select>
           </FormItem>
@@ -20,6 +19,7 @@
             <DatePicker
               placeholder="选择开课时间"
               type="date"
+              :value="form.startTime"
               format="yyyy-MM-dd"
               @on-change="form.startTime=$event"
             ></DatePicker>
@@ -27,6 +27,7 @@
           <FormItem label="结课时间" prop="endTime">
             <DatePicker
               placeholder="选择结课时间"
+              :value="form.endTime"
               type="date"
               format="yyyy-MM-dd"
               @on-change="form.endTime=$event"
@@ -52,6 +53,10 @@
     props: {
       //是否为更新表单
       isUpdate: {
+        type: Boolean,
+        default: true
+      },
+      isCopy: {
         type: Boolean,
         default: true
       },
@@ -114,11 +119,13 @@
   watch: {
       updateData: function(newValue, oldValue) {
           this.$refs['form'].resetFields();
-          if (this.isUpdate) {
+          if (this.isUpdate || this.isCopy) {
               for (let k in this.form) {
                   this.$set(this.form, k, newValue[k]);
               }
-              this.$set(this.form, 'id', newValue['id']);
+              if (this.isUpdate) {
+                this.$set(this.form, 'id', newValue['id']);
+              }
           }
       },
       isUpdate: function(newValue, oldValue) {
@@ -126,7 +133,13 @@
               this.resetForm();
               this.$refs['form'].resetFields();
           }
-      }
+      },
+      isCopy: function(newValue, oldValue) {
+        if (!newValue) {
+          this.resetForm();
+          this.$refs['form'].resetFields();
+        }
+      },
   },
     created() {},
     mounted() {},
