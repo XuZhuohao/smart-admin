@@ -11,9 +11,11 @@
                     课程名称 :
                     <Input placeholder="请输入课程名称" style="width: 180px" v-model="queryForm.projectName" />
                 </span>
-                <span>
-                    课程类别（1：美术，2：书法） :
-                    <Input placeholder="请输入课程类别（1：美术，2：书法）" style="width: 180px" v-model="queryForm.projectType" />
+              <span>
+                    课程类别:
+                    <Select placeholder="请选择课程类别" style="width:200px" multiple v-model="queryForm.projectTypeList">
+                      <Option :key="item.value" :value="item.value" v-for="item in projectType">{{item.desc}}</Option>
+                    </Select>
                 </span>
                 <ButtonGroup>
                     <Button
@@ -184,6 +186,7 @@
     import { PAGE_SIZE_OPTIONS } from '@/constants/table-page';
     import { projectInfoApi } from '@/api/project-info';
     import ProjectInfoListForm from './components/project-info-list-form';
+    import {course_category} from '@/constants/studio.js';
     const PAGE_SIZE_INIT = 20;
     export default {
         name: 'ProjectInfoList',
@@ -193,6 +196,7 @@
         props: {},
         data() {
             return {
+               dict:{projectType:[]},
                 /* -------------------------添加、更新表单 ------------------------- */
                 saveModal: {
                     show: false,
@@ -219,7 +223,7 @@
                    //课程名称
                    projectName:null,
                    //课程类别（1：美术，2：书法）
-                   projectType:null,
+                   projectTypeList:null,
                     createTimeRange: ["",""],
                     updateTimeRange: ["",""],
                     pageNum: 1,
@@ -248,12 +252,6 @@
                             align: 'center'
                         },
                                                 {
-                            title: '主键id',
-                            key: 'id',
-                            tableColumn: 'h_project_info.id',
-                            sortable: 'custom'
-                        },
-                                                {
                             title: '课程编码',
                             key: 'projectCode',
                             tableColumn: 'h_project_info.project_code',
@@ -266,10 +264,13 @@
                             sortable: 'custom'
                         },
                                                 {
-                            title: '课程类别（1：美术，2：书法）',
+                            title: '课程类别',
                             key: 'projectType',
                             tableColumn: 'h_project_info.project_type',
-                            sortable: 'custom'
+                            sortable: 'custom',
+                            render: (h, params) =>{
+                              return h('span', this.dict.projectType[params.row.projectType])
+                            }
                         },
                                                 {
                             title: '课程定价',
@@ -341,7 +342,20 @@
                 }
             };
         },
-        computed: {},
+        computed: {
+          // 文件业务类型
+          projectType: function() {
+            let array = [];
+            for (let item in course_category) {
+              let obj = {};
+              obj.desc = course_category[item].desc;
+              obj.value = course_category[item].value;
+              this.dict.projectType[obj.value] = obj.desc;
+              array.push(obj);
+            }
+            return array;
+          },
+        },
         watch: {},
         filters: {},
         created() {},

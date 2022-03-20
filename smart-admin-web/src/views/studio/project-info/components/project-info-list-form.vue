@@ -1,14 +1,8 @@
 <template>
   <div>
     <Form ref="form" :rules="formValidate" :label-width="90" :model="form">
-          <FormItem label="课程编码" prop="projectCode">
-            <Input v-model="form.projectCode" />
-          </FormItem>
           <FormItem label="课程名称" prop="projectName">
             <Input v-model="form.projectName" />
-          </FormItem>
-          <FormItem label="课程类别（1：美术，2：书法）" prop="projectType">
-            <Input type="number" v-model.number="form.projectType" />
           </FormItem>
           <FormItem label="课程定价" prop="projectPrice">
             <Input type="number" v-model.number="form.projectPrice" />
@@ -16,14 +10,30 @@
           <FormItem label="地点" prop="projectPlace">
             <Input v-model="form.projectPlace" />
           </FormItem>
+          <FormItem label="课程类别" prop="projectType">
+            <Select placeholder="请选择课程类别" style="width:200px" v-model="form.projectType">
+              <Option value>全部</Option>
+              <Option :key="item.value" :value="item.value" v-for="item in projectType">{{item.desc}}</Option>
+            </Select>
+          </FormItem>
           <FormItem label="开课时间" prop="startTime">
-            <Input v-model="form.startTime" />
+            <DatePicker
+              placeholder="选择开课时间"
+              type="date"
+              format="yyyy-MM-dd"
+              @on-change="form.startTime=$event"
+            ></DatePicker>
           </FormItem>
           <FormItem label="结课时间" prop="endTime">
-            <Input v-model="form.endTime" />
+            <DatePicker
+              placeholder="选择结课时间"
+              type="date"
+              format="yyyy-MM-dd"
+              @on-change="form.endTime=$event"
+            ></DatePicker>
           </FormItem>
           <FormItem label="总课时" prop="totalClassHours">
-            <Input type="number" v-model.number="form.totalClassHours" />
+            <Input type="number" style="width:200px" v-model.number="form.totalClassHours" />
           </FormItem>
     </Form>
     <Row class="code-row-bg" justify="end" type="flex">
@@ -34,6 +44,7 @@
 </template>
 <script>
   import { projectInfoApi } from '@/api/project-info';
+  import {course_category} from '@/constants/studio.js';
   export default {
     name: 'ProjectInfoListForm',
     components: {
@@ -53,8 +64,6 @@
       return {
         //表单数据
         form: {
-         //课程编码
-         projectCode:null,
          //课程名称
          projectName:null,
          //课程类别（1：美术，2：书法）
@@ -72,8 +81,6 @@
         },
         //表单验证
         formValidate: {
-        //课程编码
-        projectCode:[{ required: true, message: '请输入课程编码', trigger: 'blur' }],
         //课程名称
         projectName:[{ required: true, message: '请输入课程名称', trigger: 'blur' }],
         //课程类别（1：美术，2：书法）
@@ -81,15 +88,28 @@
         //课程定价
         projectPrice:[{ type:'number',required: true, message: '请输入课程定价', trigger: 'blur' }],
         //地点
-        projectPlace:[{ required: true, message: '请输入地点', trigger: 'blur' }],
+        // projectPlace:[{ required: true, message: '请输入地点', trigger: 'blur' }],
         //开课时间
         startTime:[{ required: true, message: '请输入开课时间', trigger: 'blur' }],
         //结课时间
-        endTime:[{ required: true, message: '请输入结课时间', trigger: 'blur' }],
+        // endTime:[{ required: true, message: '请输入结课时间', trigger: 'blur' }],
         //总课时
         totalClassHours:[{ type:'number',required: true, message: '请输入总课时', trigger: 'blur' }],
         }
       };
+    },
+    computed: {
+      // 文件业务类型
+      projectType: function() {
+        let array = [];
+        for (let item in course_category) {
+          let obj = {};
+          obj.desc = course_category[item].desc;
+          obj.value = course_category[item].value;
+          array.push(obj);
+        }
+        return array;
+      },
     },
   watch: {
       updateData: function(newValue, oldValue) {

@@ -1,10 +1,13 @@
 package com.yui.smart.admin.module.studio.grade.domain.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.NoArgsConstructor;
 
 /**
  * 新建 [ 课程信息 ]
@@ -14,6 +17,9 @@ import io.swagger.annotations.ApiModelProperty;
  * @date  2022-03-12 22:38:28
  * @since JDK1.8
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 public class ProjectInfoAddDTO {
     @ApiModelProperty("课程编码")
@@ -32,11 +38,11 @@ public class ProjectInfoAddDTO {
     private String projectPlace;
 
     @ApiModelProperty("开课时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date startTime;
 
     @ApiModelProperty("结课时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endTime;
 
     @ApiModelProperty("总课时")
