@@ -15,10 +15,10 @@ export const HProjectManage = [
       icon: 'icon iconfont iconjiekouwendang'
     },
     children: [
+      ...projectInfo,
       ...gradeInfo,
       ...gradeStudentInfo,
       ...gradeTeacherInfo,
-      ...projectInfo,
     ]
   }
 ];

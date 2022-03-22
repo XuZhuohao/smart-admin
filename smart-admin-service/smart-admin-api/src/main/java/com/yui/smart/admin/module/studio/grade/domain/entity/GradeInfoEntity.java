@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.yui.smart.admin.common.domain.BaseEntity;
 import java.util.Date;
 import java.math.BigDecimal;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -38,6 +40,11 @@ public class GradeInfoEntity extends BaseEntity{
      * 地点
      */
     private String gradePlace;
+
+    /**
+     * 课程定价
+     */
+    private BigDecimal gradePrice;
 
     /**
      * 状态（1：正常，2：结束，3:取消）

@@ -2,7 +2,11 @@ package com.yui.smart.admin.module.studio.grade.domain.dto;
 
 import com.yui.smart.admin.common.domain.PageParamDTO;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +18,9 @@ import java.util.List;
  * @date 2022-03-12 22:38:28
  * @since JDK1.8
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Data
 public class GradeInfoQueryDTO extends PageParamDTO {
 

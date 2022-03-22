@@ -28,6 +28,9 @@ public class GradeInfoAddDTO {
     @ApiModelProperty("地点")
     private String gradePlace;
 
+    @ApiModelProperty("课程定价")
+    private BigDecimal gradePrice;
+
     @ApiModelProperty("状态（1：正常，2：结束，3:取消）")
     private Integer status;
 

@@ -71,7 +71,7 @@ public class ProjectInfoService {
                 .build());
         Integer projectType = addDTO.getProjectType();
         ProjectTypeEnums projectTypeEnums = ProjectTypeEnums.get(projectType);
-        String code = CodeUtils.createCode(projectTypeEnums.getCodePrefix(), addDTO.getStartTime(), count);
+        String code = CodeUtils.createCode(projectTypeEnums.getCodePrefix(), addDTO.getStartTime(), count + 1);
         addDTO.setProjectCode(code);
         ProjectInfoEntity entity = SmartBeanUtil.copy(addDTO, ProjectInfoEntity.class);
         projectInfoDao.insert(entity);

@@ -177,6 +177,18 @@
                     @on-form-close="saveFormClose"
             />
         </Modal>
+        <Modal
+          :footer-hide="true"
+          :title="'创建班级'"
+          v-model="createGrade.show"
+          @on-cancel="saveFormClose"
+          width="500"
+        >
+          <CreateGradeForm
+            :projectData="createGrade.projectData"
+            @on-form-close="createGradeFormClose"
+          />
+        </Modal>
         <!-------添加、更新 Form表单 end------->
     </div>
 </template>
@@ -186,17 +198,24 @@
     import { PAGE_SIZE_OPTIONS } from '@/constants/table-page';
     import { projectInfoApi } from '@/api/project-info';
     import ProjectInfoListForm from './components/project-info-list-form';
+    import CreateGradeForm from './components/create-grade-form.vue';
     import {course_category} from '@/constants/studio.js';
     const PAGE_SIZE_INIT = 20;
     export default {
         name: 'ProjectInfoList',
         components: {
-                ProjectInfoListForm
+                ProjectInfoListForm, CreateGradeForm
         },
         props: {},
         data() {
             return {
                dict:{projectType:[]},
+
+                /* -------------------------创建班级 ------------------------- */
+                createGrade:{
+                    show: false,
+                    projectData: null
+                },
                 /* -------------------------添加、更新表单 ------------------------- */
                 saveModal: {
                     show: false,
@@ -345,6 +364,18 @@
                                       ],
                                       action: () => {
                                         this.showCopyProjectInfoForm(params.row);
+                                      }
+                                    },
+                                    {
+                                      title: '创建班级',
+                                      directives: [
+                                        {
+                                          name: 'privilege',
+                                          value: 'create-grade-form.vue'
+                                        }
+                                      ],
+                                      action: () => {
+                                        this.showCreateGradeForm(params.row);
                                       }
                                     },
                                 ];
@@ -530,10 +561,17 @@
               this.saveModal.updateData = updateObject;
               this.saveModal.show = true;
             },
+            showCreateGradeForm(projectData){
+              this.createGrade.show = true;
+              this.createGrade.projectData = projectData;
+            },
             saveFormClose(){
                 this.saveModal.show = false;
                 this.queryList();
-            }
+            },
+          createGradeFormClose(){
+            this.createGrade.show = false;
+          }
             /*-------------------------添加，修改 表单 end------------------------- */
         }
     };
